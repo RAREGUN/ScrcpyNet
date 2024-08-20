@@ -52,14 +52,14 @@ namespace ScrcpyNet
         //    this.videoStreamDecoder.Scrcpy = this;
         //}
 
-        public void Start(long timeoutMs = 5000)
+        public void Start(int port = 27183, long timeoutMs = 5000)
         {
             if (Connected)
                 throw new Exception("Already connected.");
 
-            MobileServerSetup();
+            MobileServerSetup(port);
 
-            listener = new TcpListener(IPAddress.Loopback, 27183);
+            listener = new TcpListener(IPAddress.Loopback, port);
             listener.Start();
 
             MobileServerStart();
@@ -240,7 +240,7 @@ namespace ScrcpyNet
             stream.Write(bytes);
         }
 
-        private void MobileServerSetup()
+        private void MobileServerSetup(int port)
         {
             MobileServerCleanup();
 
@@ -248,7 +248,7 @@ namespace ScrcpyNet
             UploadMobileServer();
 
             // Create port reverse rule
-            adb.CreateReverseForward(device, "localabstract:scrcpy", "tcp:27183", true);
+            adb.CreateReverseForward(device, "localabstract:scrcpy", $"tcp:{port}", true);
         }
 
         /// <summary>

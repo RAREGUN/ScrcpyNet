@@ -10,6 +10,7 @@ A work in progress reimplementation of the [scrcpy client](https://github.com/Ge
 - Window resizing
 - **No** audio support
 - _Usually_ crash free
+- Multiple simultaneous devices
 
 ## Screenshot
 
